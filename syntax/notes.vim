@@ -114,17 +114,19 @@ syntax cluster notesInline add=notesWindowsPath
 highlight def link notesWindowsPath Directory
 
 " Highlight TODO, DONE, FIXME and XXX markers. {{{2
-syntax match notesTodo /\<TODO\>/
+syntax match notesTodo /\<TODO\|TASK\>/
 syntax match notesXXX /\<XXX\>/
-syntax match notesFixMe /\<FIXME\>/
+syntax match notesBug /\<BUG\>/
+syntax match notesFixMe /\<FIXME\|FIX\>/
 syntax match notesInProgress /\<\(CURRENT\|INPROGRESS\|STARTED\|WIP\)\>/
 syntax match notesDoneItem /^\(\s\+\).*\<DONE\>.*\(\n\1\s.*\)*/ contains=@notesInline
-syntax match notesDoneMarker /\<DONE\>/ containedin=notesDoneItem
-highlight def link notesTodo WarningMsg
-highlight def link notesXXX WarningMsg
-highlight def link notesFixMe WarningMsg
+syntax match notesDoneMarker /\<DONE\|FIXED\|CREATED\>/ containedin=notesDoneItem
+highlight def link notesTodo Todo
+highlight def link notesXXX gitcommitDiscardedType
+highlight def link notesBug hsImport
+highlight def link notesFixMe gitcommitDiscardedType
 highlight def link notesDoneItem Comment
-highlight def link notesDoneMarker Question
+highlight def link notesDoneMarker helpOption
 highlight def link notesInProgress Directory
 
 " Highlight Vim command names in :this notation. {{{2
@@ -140,7 +142,7 @@ highlight def link notesTitle ModeMsg
 
 " Short sentences ending in a colon are considered headings. {{{2
 syntax match notesShortHeading /^\s*\zs\u.\{1,50}\k:\ze\(\s\|$\)/ contains=@notesInline
-highlight def link notesShortHeading Title
+highlight def link notesShortHeading hs_DeclareFunction
 
 " Atx style headings are also supported. {{{2
 syntax match notesAtxHeading /^#\+.*/ contains=notesAtxMarker,@notesInline
